@@ -18,7 +18,9 @@ def main():
     # Problem selector
     selected_title = st.selectbox("Select Problem", problem_titles)
 
-    st.subheader(f"{selected_title}")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader(f"{selected_title}")
 
     text_file_path = f"./matlab_code/{selected_title.replace(' ','_')}.txt"
     if os.path.exists(text_file_path):

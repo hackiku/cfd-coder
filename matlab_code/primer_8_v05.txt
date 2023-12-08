@@ -1,0 +1,5 @@
+The MATLAB code discretizes space and time to simulate a numerical solution and compare it with an analytical counterpart. Starting with spatial discretization, `x = linspace(xl, xd, Nx);` creates a linearly spaced vector, representing spatial points. `dx` calculates the spatial step size. Time is discretized with a final time `tfin` and a time step `dt`. 
+
+Boundary conditions are defined using a step function for `u0`, distinguishing between values on either side of `x=0`. The numerical solution employs an upwind scheme, iterating over space within a time loop. Each `u(j)` is updated based on the previous time step, incorporating a discretized derivative. The Courant number (`u0(j)*dt/dx`), crucial for stability, is implicitly used but not explicitly calculated.
+
+The analytical solution uses conditional statements to assign values based on `x`'s relation to `t`, but these conditions seem overly simplified. The `plot` function visualizes both solutions, updating in real-time. Understanding the underlying physics and ensuring the analytical solution's accuracy is essential for meaningful comparisons.
