@@ -1,0 +1,7 @@
+This MATLAB code performs a numerical simulation of a wave-like equation using the finite difference method. The grid initialization is carried out with `Nx`, specifying 301 grid points, and `x`, which spans from 0 to 300. The simulation parameters include `a`, the wave speed, `dx`, the spatial step size, `dt`, the time step, and `c`, the Courant number ensuring stability when it's less than 1.
+
+The initial condition is set to zero everywhere except between `x=100` and `x=220`, where it takes the form of a sinusoidal wave `100 * sin(pi * (x(i) - 100) / 120)`. This condition models, for example, an initial disturbance in a medium.
+
+A time-stepping loop progresses the solution in time until the final time `tfinal` is reached. Boundary conditions are applied at both ends of the spatial domain (`U(1)` and `U(Nx)`), maintaining the wave within a confined space. The main computation within the loop updates the solution `U` based on the previous two time steps `U0` and `U00`, using a second-order finite difference scheme, which is visualized in real-time.
+
+Finally, the code plots the initial and final states of the system, allowing for a comparison between the initial disturbance and its evolution over time as dictated by the numerical model.
