@@ -1,0 +1,9 @@
+This MATLAB code models the behavior of an expansion wave, governed by the PDE `u_ux + u_t = 0`. The code begins by discretizing both space and time. The spatial domain ranges from `xl` to `xd`, divided into `Nx` points, while the temporal domain starts at `t = 0` and ends at `tfin`, advancing in steps of `dt`.
+
+The initial condition is defined as a step function: `u0 = 2*(x<0) + 1*(x>=0)`, representing two distinct states based on the x-coordinate. A boundary condition `u(1) = 2` is also set, maintaining a constant value at the start of the spatial domain.
+
+In the time-stepping loop, the numerical scheme calculates the solution `u` at each time step. The key line `u(2:Nx) = u0(2:Nx) - dt/dx * u0(2:Nx).*(u0(2:Nx) - u0(1:Nx-1))` represents the discretized version of the PDE, updating the solution based on the current and previous spatial points.
+
+An analytical solution `ua` is also computed within the loop. The condition `if x(i) < 3/2*t` divides the spatial domain based on the relationship between `x` and `t`, reflecting the characteristics of the expansion wave.
+
+The code concludes by plotting both the numerical and analytical solutions for visual comparison, aiding in understanding the dynamics of the expansion wave and the accuracy of the numerical method.

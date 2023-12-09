@@ -1,0 +1,7 @@
+Three different numerical methods for solving a differential equation. The first part employs an explicit first-order method, where `u` is updated iteratively using `u(i) = u(i-1) * (1 - dx)`. This method is straightforward but limited in accuracy.
+
+The second part uses an explicit second-order method for improved accuracy. It starts with two boundary conditions: `us(1) = 1` and `us(2) = exp(-x(2))`. The update formula `us(i) = us(i-2) - 2 * dx * us(i-1)` aims to achieve second-order accuracy. This method provides a more accurate solution than the first-order method, especially noticeable in the plotted results.
+
+The final part of the script uses an implicit method. It constructs a sparse matrix `A` using `spdiags` and solves the system `A\B` where `B` is a vector with the initial condition. This method is typically more stable and reliable for stiff equations.
+
+Plotting each method's solution allows for a visual comparison, showcasing the differences in accuracy and behavior of these numerical approaches.

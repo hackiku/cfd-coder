@@ -1,0 +1,66 @@
+%proracun borbenog zaokreta lakog lovca bombardera
+clear all, clc
+
+%ulazni podaci
+m = 5100; % masa, [kg]
+g = 9.81; % ubrzanje zemljine teze, [m/s^2]
+S = 16.5; % povrsina krila, [m^2]
+T = 22400; % potisak, [N]
+V1 = 300; % brzina pri ulasku u borbeni zaokret, [m/s]
+H1 = 1000; % visina pri ulasku u borbeni zaokret, [m]
+rho0 = 1.225; % gustina na 0m, [kg/m^3]
+
+% aerodinamicki koeficijenti
+Czmax = 1.08; % max koeficijent uzgona
+Cxo = 0.020; 
+kappa = 0.07;
+Cz = sqrt(Cxo/kappa); 
+Cx = 2*Cxo;
+Cz_Cx = Cz/Cx;
+
+% proracun
+N = 10001; % broj podela
+t = linspace(0, 20, N); % vreme, [s]
+dt = t(2) - t(1); % vremenski korak, [s]
+
+% inicijalizacija potrebnih nizova
+V = zeros(1, length(t)); % brzina, [m/s]
+V(1) = V1;
+h = zeros(1, length(t)); % visina, [m]
+h(1) = H1;
+gamma = zeros(1, length(t));% ugao penjanja, [rad]
+chi = zeros(1, length(t)); % ugao skretanja, [rad]
+phi = pi/6; % bocni nagib, [rad]
+nx = zeros(1, length(t)); % koeficijent tangencijalnog opterecenja
+n = zeros(1, length(t)); % koeficijent normalnog opterecenja
+% u pocetnom trenutku (i = 1) letelica ima brzinu V1 na visini H1
+i = 2;
+while i<=N && chi(i-1)<pi
+    % pomocne promenljive
+    rho = rho0*(1-2.255906e-5*h(i-1))^4.265;
+    Rx = 0.5*rho*V(i-1)^2*S*Cx;
+    Rz = 0.5*rho*V(i-1)^2*S*Cz;
+    % koeficijenti opterecenja
+    nx(i) = (T*1 - Rx)/m/g;
+    n(i) = (Rz + T*0)/m/g;
+    % nepoznate velicine
+    gamma(i) = gamma(i-1) + dt*(n(i)*cos(phi) - cos(gamma(i-1)))*g/V(i-1);
+    chi(i) = chi(i-1) + dt*n(i)*sin(phi)*g/(V(i-1)*cos(gamma(i)));
+    V(i) = V(i-1) + dt*(nx(i) - sin(gamma(i)))*g;
+    h(i) = h(i-1) + dt*V(i)*sin(gamma(i));
+    i = i + 1;
+end
+
+dh = h(i-1) - h(1); % dh*2*g/V1^2
+disp('Visinska razlika je [m]')
+disp(dh)
+tz = t(i-1); % tz*g/V1
+disp('Vreme trajanja zaokreta je [s]')
+disp(tz)
+V2 = V(i-1);
+disp('Brzina na kraju zaokreta je [m/s]')
+disp(V2)
+figure
+plot(t(1:i-1), V(1:i-1), 'linewidth', 2);
+xlabel('t [s]'), ylabel('V [m/s]')
+grid on, set(gca, 'fontsize', 14)

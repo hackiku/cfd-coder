@@ -1,0 +1,7 @@
+In this MATLAB code, the task is to solve the partial differential equation `u^2ux + ut = 0` using numerical methods and compare the results with an analytical solution. The code begins by discretizing space and time with `linspace` and setting `dt`, respectively. The initial condition is a step function based on the x-coordinate.
+
+The numerical solution is computed using a while loop that increments time until `tfin`. A key part of the code is the numerical scheme: `u(2:Nx) = u0(2:Nx) - dt/dx * (u0(2:Nx).^2 -  u0(2:Nx) - u0(1:Nx-1));` This line represents the discretized form of the given PDE, with a non-linear term `(u0(2:Nx).^2)`.
+
+An analytical solution is also calculated within the loop. It uses conditional statements to define different behaviors based on the value of x relative to t. Particularly, the `sqrt((x(i)-3)/t)` part represents the inverse relationship as per the analytical solution.
+
+Finally, the code plots both the numerical and analytical solutions for comparison. This visual representation helps to assess the accuracy of the numerical method against the theoretical analytical solution.

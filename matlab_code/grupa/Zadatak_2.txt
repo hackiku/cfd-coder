@@ -1,0 +1,30 @@
+%proracun zaleta lakog lovca bombardera
+clear all, clc
+
+%ulazni podaci
+m=5100; %masa [kg]
+g=9.81; %ubrzanje zemljine teze [m/s^2]
+rho=1.225; %gustina [kg/m^3]
+S=16.5; %povrsina krila , [m^2]
+T=22400; %potisak [N]
+Clmax=1.08; %max koeficijent uzgona
+mu=0.05; %koeficijent trenja piste
+
+%proracun
+Vmin=sqrt(2*m*g/rho/S/Clmax);
+Vp=1.1*Vmin; %brzina u trenutku odvajanja od tla
+
+%aerodinamicki koeficijenti
+Cdo=0.025;
+kappa=0.09;
+CL=sqrt(Cdo/kappa);
+CD=2*Cdo;
+CL_CD=CL/CD;
+
+%zalet
+V=linspace(0,Vp,101); %promena brzine [m/s]
+dV=V(2)-V(1); %prirastaj brzine [m/s]
+fV=V./(T/m-mu*g-rho*V.^2/2/m*S*(CD-mu*CL)); %fV=f(V)
+fVsr=(fV(1:end-1)+fV(2:end))/2; %srednja vrednost
+Sg=sum(fVsr*dV); %zalet kao suma
+fprintf('Zalet je %d [m]',Sg)
